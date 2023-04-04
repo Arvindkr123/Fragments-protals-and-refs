@@ -9,13 +9,19 @@ const AddUser = (props) => {
   const [error, setError] = useState();
   const nameInputRef = useRef();
   const ageInputRef = useRef();
+  const collegeInputRef = useRef();
 
   const addUserHandler = (event) => {
     event.preventDefault();
     // console.log(nameInputRef.current.value);
     const enteredUsername = nameInputRef.current.value;
     const enteredAge = ageInputRef.current.value;
-    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+    const enteredCollege = collegeInputRef.current.value;
+    if (
+      enteredUsername.trim().length === 0 ||
+      enteredAge.trim().length === 0 ||
+      enteredCollege.trim().length === 0
+    ) {
       setError({
         title: "Invalid input",
         message: "Please enter a valid name and age (non-empty values).",
@@ -29,9 +35,10 @@ const AddUser = (props) => {
       });
       return;
     }
-    props.onAddUser(enteredUsername, enteredAge);
+    props.onAddUser(enteredUsername, enteredAge, enteredCollege);
     nameInputRef.current.value = "";
     ageInputRef.current.value = "";
+    collegeInputRef.current.value = "";
   };
 
   const errorHandler = () => {
@@ -53,6 +60,8 @@ const AddUser = (props) => {
           <input id="username" type="text" ref={nameInputRef} />
           <label htmlFor="age">Age (Years)</label>
           <input id="age" type="number" ref={ageInputRef} />
+          <label htmlFor="college">College</label>
+          <input id="college" type="text" ref={collegeInputRef} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
